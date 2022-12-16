@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.api.test.junit.mockito.model.User;
 import br.com.api.test.junit.mockito.repository.UserRepository;
 import br.com.api.test.junit.mockito.service.UserService;
+import br.com.api.test.junit.mockito.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Optional<User> findById(int id) {
 		Optional<User> usuario = userRepository.findById(id);
-		return Optional.ofNullable(usuario.orElse(null)); // verifica se tem ou nao ususario cadastrado com o id
+		return Optional.ofNullable(usuario.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"))); // verifica se tem ou nao ususario cadastrado com o id
 	}
 
 	@Override
